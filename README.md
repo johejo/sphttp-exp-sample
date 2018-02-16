@@ -40,7 +40,23 @@ invalid_block_log = get_invalid_block_log(recv_log)
 
 ## ディレクトリ構成
 
+```
+.
+├── README.md
+├── exp
+│   ├── all_time_changes.py
+│   ├── analyze.py
+│   ├── count_dup.py
+│   ├── exp.py
+│   ├── head.py
+│   └── head_itv.pdf
+├── requirements.txt
+└── tool
+    ├── bandwidth.json
+    ├── bandwidth_check.py
+    └── convert.py
 
+```
     
 
 ## 実験
