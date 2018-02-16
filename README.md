@@ -13,6 +13,7 @@
 - yarl: URL解析
 - matplotlib: グラフ描画
 - tqdm: 進捗バー表示
+- requests HTTPライブラリ
 
 #### 一括インストール
 
@@ -31,6 +32,7 @@ sphttpにログ解析用関数をいくつか定義済み
 
 ```python
 from sphttp.analyze import open_pickled, get_invalid_block_log
+
 log = open_pickled(filename)
 send_log, recv_log, head_log = log
 invalid_block_log = get_invalid_block_log(recv_log)
@@ -38,17 +40,7 @@ invalid_block_log = get_invalid_block_log(recv_log)
 
 ## ディレクトリ構成
 
-.  
-├── README.md  
-├── exp  
-│   ├── all_time_changes.py　<- 全試行の非有効ブロック数および遅延時間の時間変化をプロット  
-│   ├── analyze.py <- 基本的な解析  
-│   ├── count_dup.py <- 重複再要求送信回数表示  
-│   ├── exp.py <- 実験スクリプト  
-│   └── head.py <- 初期遅延予測についてプロット  
-├── requirements.txt  
-└── tool  
-    └── convert.py　<- ログ変換ツール  
+
     
 
 ## 実験
@@ -80,18 +72,32 @@ $ python all_time_changes.py
 
 大量のグラフが出力されるので注意
 
-## ログ変換ツール
+## ツール
+
+### ログ変換ツール
 
 (送信ログ, 受信ログ, 各ホストに対するHEADリクエストの応答時間ログ)の3つがまとまったログから各ログを二次元のテキスト形式のログに変換するツール
 
 ```bash
 $ python convert.py -s hoge.pickle
 ```
-この例ではhoge.pickleというログから送信ログのみを標準出力に表示 
+この例ではhoge.pickleというログから送信ログのみを標準出力に表示  
+-o オプションでファイル名を指定することでファイルへの書き出しも可能  
+詳しくは--helpオプション参照
 
-また、-o オプションでファイル名を指定することでファイルへの書き出しも可能
+### 帯域測定ツール
+帯域の事前調査のためのツール
 
-詳しくは--helpオプション付きで実行
+```bash
+$ python bandwidth_check.py
+```
+json形式で結果を出力ファイルに出力  
+デフォルトのファイル名はISO-8601形式の日付と時刻.json  
+-n オプションで試行回数の指定可能  
+-o オプションでファイル名の指定可能  
+帯域のSI接頭辞も変更可能  
+詳しくは--helpオプション参照
+
 
 ## コメント
 sphttpやサンプルスクリプトのpythonコードにはパフォーマンス向上目的で大量の内包表記が含まれているので

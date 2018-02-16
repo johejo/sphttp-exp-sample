@@ -55,7 +55,7 @@ def main():
     plt.rcParams["font.size"] = 26
 
     left = -5
-    right = 100
+    right = 120
 
     for n in range(10):
         for dup in dups:
